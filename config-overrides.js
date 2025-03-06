@@ -9,8 +9,7 @@ module.exports = {
   webpack: override(
     addWebpackExternals({
       'react': 'React',
-      'react-dom': 'ReactDOM',
-      'axios': 'axios'
+      'react-dom': 'ReactDOM'
     }),
     addDecoratorsLegacy()
   ),

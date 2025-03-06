@@ -17,33 +17,28 @@ const extensions = [
 export default {
   input: getPath('../src/index.ts'),
   external: [
-    'lodash'
+    'react',
+    'react-dom'
   ],
   output: [
     {
-      name: 'donner-musicxml-piano',
+      name: 'musicxml2json-piano',
       file: 'demos/dist/index.js', // 通用模块
       format: 'umd',
-      globals: {
-        lodash: 'lodash'
-      }
     },
     {
-      name: 'donner-musicxml-piano',
+      name: 'musicxml2json-piano',
       file: 'demos/dist/index.esm.js', // es6模块
       format: 'esm',
-      globals: {
-        lodash: 'lodash'
-      }
     }
   ],
-  plugins:[
+  plugins: [
     del({ targets: 'demos/dist/*' }),
     replace({
       preventAssignment: true,
       babelHelpers: 'runtime',
       values: {
-        'process.env.NODE_ENV': JSON.stringify('developemnt')
+        'process.env.NODE_ENV': JSON.stringify('development')
       }
     }),
     json(),
