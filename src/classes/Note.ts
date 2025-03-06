@@ -21,6 +21,7 @@ import {
 
 type PropsType = {
   id: string
+  staff?: Clef
   xmlData?: NoteXML
 }
 
@@ -41,14 +42,19 @@ export default class Note implements NoteInterface {
     tied: null,
     tuplet: null
   }
+  public staff: Clef | null = null
   public stem: Stem | null = null
   public time: Time | null = null
   public timeModification: TimeModification | null = null
   public type: NoteType
   public view: NoteView
 
-  constructor ({ id, xmlData }: PropsType) {
+  constructor ({ id, staff, xmlData }: PropsType) {
     this.id = id
+
+    if (staff) {
+      this.staff = staff
+    }
 
     if (xmlData) {
       this.beam = this.getBeam(xmlData)

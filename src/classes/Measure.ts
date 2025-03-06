@@ -83,21 +83,22 @@ export default class Measure {
 
     const notesXML = isArray(measureXML.note) ? measureXML.note : [measureXML.note]
     notesXML.forEach((noteXML) => {
+      const staff = this.staffs[noteXML.staff - 1]
+
       if (this.isChord(noteXML)) {
         const lastNote = notesList[notesList.length - 1]
         lastNote.view = 'chord'
 
-        console.log(noteXML.staff)
-
-        const data = lastNote.getData(noteXML, this.staffs[noteXML.staff])
+        const data = lastNote.getData(noteXML, staff)
         data && lastNote.appendData(data)
       } else {
         const noteClass = new NoteClass({
           id: `N_${this.number}_${count}`,
+          staff,
           xmlData: noteXML
         })
 
-        const data = noteClass.getData(noteXML, this.staffs[noteXML.staff])
+        const data = noteClass.getData(noteXML, staff)
         data && noteClass.appendData(data)
 
         this.addNoteToList(noteClass, notesList)

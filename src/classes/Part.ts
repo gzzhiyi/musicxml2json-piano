@@ -27,11 +27,9 @@ export default class Part {
   constructor({ measures, speed }: PropsType) {
     measures.forEach((measure, index) => {
       const staffs = this.getStaffs(measure)
-      if (!staffs) {
-        return
+      if (!isEmpty(staffs)) {
+        this.setGlobalStaffs(staffs)
       }
-
-      this.setGlobalStaffs(staffs)
 
       const metronome = this.getMetronome(measure)
       metronome && this.setGlobalMetronome(metronome)
@@ -95,13 +93,13 @@ export default class Part {
     return null
   }
 
-  private getStaffs(measureXML: MeasureXML): Clef[] | null {
+  private getStaffs(measureXML: MeasureXML): Clef[] {
+    const o: Clef[] = []
+
     const { attributes } = measureXML
     if (!attributes) {
-      return null
+      return o
     }
-
-    const o: Clef[] = []
 
     if (isArray(attributes?.clef)) {
       attributes.clef.map((item) => {
