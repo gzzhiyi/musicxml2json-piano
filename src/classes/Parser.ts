@@ -1,8 +1,11 @@
 import {
   find,
+  flatMap,
+  flatMapDeep,
   isArray,
   isEmpty,
-  isObject
+  isObject,
+  values
 } from 'lodash'
 import { XMLValidator } from 'fast-xml-parser'
 import parseXML from '@/core/parseXML'
@@ -105,12 +108,9 @@ export default class Parser {
   }
 
   getNoteById(id: string): Note | null {
-    // const allNotes = this.parts.flatMap(part =>
-    //   part.measures.flatMap(measure => measure.notes)
-    // )
+    const allStaffs = flatMapDeep(this.parts, (outer) => flatMap(outer.measures, measure => values(measure.staffs)))
+    const foundStaff = find(allStaffs, { id })
 
-    // return find(allNotes, { id }) || null
-
-    return null
+    return foundStaff || null
   }
 }

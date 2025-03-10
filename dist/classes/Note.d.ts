@@ -15,13 +15,12 @@ export default class Note implements NoteInterface {
     id: string;
     name: string;
     notations: Notations;
-    staff: Clef | null;
     stem: Stem | null;
     time: Time | null;
     timeModification: TimeModification | null;
     type: NoteType;
     view: NoteView;
-    constructor({ id, staff, xmlData }: PropsType);
+    constructor({ id, xmlData }: PropsType);
     private getArticulations;
     private getBeam;
     getData(noteXML: NoteXML, staff: Clef): NoteData | null;

@@ -75,7 +75,7 @@ export default class Measure {
 
     if (isEmpty(measureXML?.note)) { // 如果小节音符为空，自动补全音符
       const noteClass = new NoteClass({
-        id: `N_${this.number}_${count}`
+        id: `N_${staff}_${this.number}_${count}`
       })
 
       this.addNoteToList(noteClass, notesList)
@@ -92,7 +92,7 @@ export default class Measure {
         data && lastNote.appendData(data)
       } else {
         const noteClass = new NoteClass({
-          id: `N_${this.number}_${count}`,
+          id: `N_${staff}_${this.number}_${count}`,
           xmlData: noteXML
         })
 
