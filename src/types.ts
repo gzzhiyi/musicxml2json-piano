@@ -80,9 +80,8 @@ export type Measure = {
   id: string
   isLast: boolean
   metronome: Metronome
-  notes: Note[]
   number: string
-  staffs: Clef[]
+  staffs: Partial<{ [key in Clef]: Note[] }>
   time: Time | null
   timeSignature: TimeSignature
 }

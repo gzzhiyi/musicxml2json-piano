@@ -105,10 +105,12 @@ export default class Parser {
   }
 
   getNoteById(id: string): Note | null {
-    const allNotes = this.parts.flatMap(part =>
-      part.measures.flatMap(measure => measure.notes)
-    )
+    // const allNotes = this.parts.flatMap(part =>
+    //   part.measures.flatMap(measure => measure.notes)
+    // )
 
-    return find(allNotes, { id }) || null
+    // return find(allNotes, { id }) || null
+
+    return null
   }
 }

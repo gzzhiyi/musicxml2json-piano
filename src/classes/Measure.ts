@@ -31,9 +31,8 @@ export default class Measure {
   public id: string
   public isLast: boolean
   public metronome: Metronome
-  public notes: Note[]
   public number: string
-  public staffs: Clef[]
+  public staffs: Partial<{ [key in Clef]: Note[] }> = {}
   public time: Time | null = null
   public timeSignature: TimeSignature
 
@@ -58,17 +57,19 @@ export default class Measure {
     this.id = id
     this.isLast = isLast
     this.speed = speed || 1
-    this.staffs = staffs
     this.startTime = startTime
 
     // Prototypes
     this.metronome = { beatUnit, bpm }
     this.timeSignature = { beats, beatType }
     this.number = this.getNumber(xmlData)
-    this.notes = this.getNotes(xmlData)
+
+    staffs.forEach((staff) => {
+      this.staffs[staff] = this.getNotes(xmlData, staff) || []
+    })
   }
 
-  private getNotes(measureXML: MeasureXML): Note[] {
+  private getNotes(measureXML: MeasureXML, staff: Clef): Note[] {
     const notesList: NoteClass[] = []
     let count = 1
 
@@ -83,8 +84,6 @@ export default class Measure {
 
     const notesXML = isArray(measureXML.note) ? measureXML.note : [measureXML.note]
     notesXML.forEach((noteXML) => {
-      const staff = this.staffs[noteXML.staff - 1]
-
       if (this.isChord(noteXML)) {
         const lastNote = notesList[notesList.length - 1]
         lastNote.view = 'chord'
@@ -94,7 +93,6 @@ export default class Measure {
       } else {
         const noteClass = new NoteClass({
           id: `N_${this.number}_${count}`,
-          staff,
           xmlData: noteXML
         })
 
